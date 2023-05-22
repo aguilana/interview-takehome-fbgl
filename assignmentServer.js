@@ -74,7 +74,7 @@ class AssignmentServer {
 
         // sort the tasks with sum
         tasksWithSum.sort((a, b) => b.sum - a.sum)
-        console.log("tasksWithSum", tasksWithSum)
+        // console.log("tasksWithSum", tasksWithSum)
 
         const sortedNonPeopleFacingArray = []
         const sortedPeopleFacingArray = []
@@ -88,7 +88,7 @@ class AssignmentServer {
         }
 
         const finalizedSortedArrayofTasks = [...sortedPeopleFacingArray, ...sortedNonPeopleFacingArray]
-        console.log("FINAL RESULTS ---->", finalizedSortedArrayofTasks)
+        // console.log("FINAL RESULTS ---->", finalizedSortedArrayofTasks)
         return finalizedSortedArrayofTasks
     }
 
@@ -117,9 +117,73 @@ class AssignmentServer {
     /**
      * Assigns Tasks to Volunteers based on their interests.
      */
+    /*     assignTasksImproved() {
+            // TODO: Implement this method.
+    
+            // create a unique set of assigned tasks
+            const assignedTasks = new Set()
+            // create a unique set of assigned volunteers
+            const assignedVolunteers = new Set()
+    
+            for (const task of this.getTasksByDesirability()) {
+    
+                console.log("TASK ONE THEN TWO --------------------->", task)
+    
+                if (assignedTasks.size === this.tasks.length) {
+                    break;
+                }
+    
+                // get the volunteers that are interested in the task and
+                // filter array if volunteer is NOT in the assigned volunteers
+                const interestedVolunteersArray = this.getInterestedVolunteers(task).filter((volunteer) => !assignedVolunteers.has(volunteer))
+    
+                // console.log("interestedVolunteersArray --->", interestedVolunteersArray)
+                // we have the task and we have the volunteers that are interested in the task.
+                // want to sort the array based on desirability from the user and assign
+                interestedVolunteersArray.sort((a, b) => {
+                    const rankA = a.interestedTasks.indexOf(task)
+                    const rankB = b.interestedTasks.indexOf(task)
+                    return rankA - rankB
+                })
+    
+                console.log("VOLUNTEERS INTERESTED IN TASK ------------->", interestedVolunteersArray)
+    
+                // now we loop through the interestedVolunteers array
+                for (const volunteer of interestedVolunteersArray) {
+                    // assign the volunteer
+                    this.assignTask(task, volunteer)
+                    // add the task to the task set
+                    assignedTasks.add(task)
+                    // add the volunteer to the volunteer set
+                    assignedVolunteers.add(volunteer)
+                    break;
+                }
+            }
+        } */
+
     assignTasksImproved() {
-        // TODO: Implement this method.
+        // loop through the tasks
+        for (const task of this.getTasksByDesirability()) {
+
+            // get the array of interested volunteers and filter
+            const interestedVolunteers = this.getInterestedVolunteers(task).filter((volunteer) => !this.assignments.has(volunteer))
+            interestedVolunteers.sort((a, b) => {
+                const rankA = a.interestedTasks.indexOf(task)
+                const rankB = b.interestedTasks.indexOf(task)
+                // return ascending order list 0,1,2,3, etc...lower === better
+                return rankA - rankB
+            })
+
+            if (interestedVolunteers.length > 0) {
+                const [volunteer] = interestedVolunteers
+                console.log("this.assignments", this.assignments)
+                console.log("VOLUNTEEEEEERKLSDHJFK:LDSJ", volunteer)
+                this.assignTask(task, volunteer)
+            }
+
+        }
     }
+
 
 
     /**
