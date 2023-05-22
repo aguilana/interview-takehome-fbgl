@@ -45,8 +45,13 @@ class Volunteer {
      * @param {Task} task
      */
 
+    // `1 / (x + 1)` where x is the index of the task in the interested Tasks
     getTaskDesirabilityScore(task) {
         // TODO: Implement this method.
+        const indexOfTask = this.interestedTasks.indexOf(task)
+        if (indexOfTask !== -1) {
+            return 1 / (indexOfTask + 1)
+        }
         return 0;
     }
 

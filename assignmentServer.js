@@ -29,9 +29,22 @@ class AssignmentServer {
      *
      * @return {!Array<Volunteer>} the volunteers
      */
+
+    // solution one
+    /*     getInterestedVolunteers(task) {
+            // TODO Implement this method.
+            const interestedVolunteers = []
+            for (let volunteer of this.volunteers) {
+                if (volunteer.isInterested(task)) {
+                    interestedVolunteers.push(volunteer)
+                }
+            }
+            return interestedVolunteers
+        } */
+
+    // solution two - optimized
     getInterestedVolunteers(task) {
-        // TODO Implement this method.
-        return []
+        return this.volunteers.filter((volunteer) => volunteer.isInterested(task))
     }
 
     /**
@@ -41,9 +54,43 @@ class AssignmentServer {
      */
     getTasksByDesirability() {
         // TODO: Implement this method.
-        return []
-    }
 
+        const tasksWithSum = []
+
+        for (let task of this.tasks.values()) {
+            // for each task I want to get a desirability score based on the volunteer
+
+            let sum = 0;
+
+            for (let volunteer of this.volunteers) {
+
+                const desirabilityScore = volunteer.getTaskDesirabilityScore(task)
+                sum += desirabilityScore
+            }
+
+            tasksWithSum.push({ task, sum })
+
+        }
+
+        // sort the tasks with sum
+        tasksWithSum.sort((a, b) => b.sum - a.sum)
+        console.log("tasksWithSum", tasksWithSum)
+
+        const sortedNonPeopleFacingArray = []
+        const sortedPeopleFacingArray = []
+
+        for (let taskWithSum of tasksWithSum) {
+            if (taskWithSum.task.isPeopleFacing()) {
+                sortedPeopleFacingArray.push(taskWithSum.task)
+            } else {
+                sortedNonPeopleFacingArray.push(taskWithSum.task)
+            }
+        }
+
+        const finalizedSortedArrayofTasks = [...sortedPeopleFacingArray, ...sortedNonPeopleFacingArray]
+        console.log("FINAL RESULTS ---->", finalizedSortedArrayofTasks)
+        return finalizedSortedArrayofTasks
+    }
 
 
     /**
