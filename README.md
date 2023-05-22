@@ -2,7 +2,10 @@
 
 You may do these tasks in any order, but take note that they are listed in the order your team has prioritized completing them.
 
-Run the tests/code by typing `sh run_volunteer.sh` in the terminal.
+Run the tests/code by typing either:
+
+1. `sh run_volunteer.sh` in the terminal. This is a shell command that will start the runner.js file, which will run the tests in the test folder.
+2. `npm start` in the terminal. This will start the runner.js file, which will run the tests in the test folder.
 
 Reminder that you are NOT expected to complete all tasks. You are expected to write clean, readable code. Remember to add comments explaining what you were working on if you run out of time in the middle of a task.
 

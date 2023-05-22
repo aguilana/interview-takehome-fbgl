@@ -1,0 +1,13 @@
+{
+  "name": "fabrictakehomestarter",
+  "version": "1.0.0",
+  "description": "You may do these tasks in any order, but take note that they are listed in the order your team has prioritized completing them.",
+  "main": "assignmentServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./runner.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
