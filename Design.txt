@@ -1,0 +1,99 @@
+Interview Part 1:
+Part 1 Instructions
+One of your teammates started to outline the design for a new project but they didn’t get very far before leaving for vacation. In the next 40 minutes, your job is to finish the design document by taking the following steps:
+
+
+Step 1
+Read the document carefully to understand the goals of the project and its technical design. You are encouraged to leave comments with questions or clarifications you may have.
+
+
+Step 2
+Reply to the questions left as comments on the right side of the document.
+
+
+Step 3
+Write the "Conclusion" section, explaining which outlined option(s) you recommend, and why.
+
+All options are defensible. There is no one “right answer;” however, we highly recommend discussing the pros, cons, trade-offs, and assumptions that motivate your choice.
+
+You can suggest new ideas that were not included in the document, but any new ideas should be accompanied by tradeoff analysis and justifications for why they are better than the options already outlined.
+
+If you run into any issues or have questions, click the ? at the top of your screen.
+```
+Throughout this section I will start asking some questions that I would like answers to:
+Fully state any assumptions.
+```
+Serve Together
+Objective
+Organizing a group of volunteers for neighborhood cleanup can be a challenge, but Serve Together aims to streamline the process of assigning tasks to volunteers and sending reminders.
+
+Overview
+Serve Together allows event organizers to advertise and manage volunteer opportunities small and large. Volunteers register for events they want to help out with, selecting the duties they are most interested in and other duties they are willing to take on. Organizers set a sign-up deadline for volunteers, and then let Serve Together assign tasks and notify volunteers of their assignments once this deadline has passed.
+
+Our client's highest priority is for tasks to be completed quickly and efficiently (meaning tasks should be spread out relatively evenly among volunteers). Organizers also want volunteers to be happy with the tasks they're assigned so that they're likely to continue showing up to events.
+
+Detailed Design
+Frontend Design
+Event organizers provide a title, description, date, and time for the event, and they input a list of tasks to be assigned to volunteers.
+
+Wireframe of Serve Together Add Task View: In this wireframe, there are
+  two input fields and a button stacked vertically. The top field contains the
+  task title and the bottom field contains the task description. Below the
+  fields, a button with the text Add Task is centered horizontally.
+
+Volunteers provide their contact information, list their most desired tasks, and select all other tasks they are willing and able to do.
+
+Wireframe of Serve Together Interested Tasks View: In this wireframe,
+  there is a vertical list of tasks and each task has a two-line grab handle
+  before it. There is a speech bubble at the bottom with the text Use grab
+  handle to reorder the list.
+
+Based on the amount of work to do and the number of volunteers, individuals may be assigned more than one task for an event.
+
+Wireframe of Serve Together Task Assignment View: In this wireframe,
+  there are three tabs at the top, outer edge labeled with task names. Inside
+  the frame, there is a task description for the selected task. Below there is
+  a dropdown to indicate the completion status of the task.
+
+Backend Design
+Each Event has an associated set of Task objects, which contain a title, a description, and a status (not started, in process, completed, stalled, etc.). Each Task is assigned to one volunteer, who is responsible for its completion. Volunteers may be responsible for multiple tasks. If a volunteer is unable to complete a task, it can be reassigned to a different volunteer.
+
+We are considering several options for assigning volunteers to tasks.
+
+Option A: Interest-Based Search
+In this approach we determine the level of interest for each task. For instance, if there are 10 volunteers, only 2 may be interested in Task X, while 8 may be interested in Task Y. We make assignments ordered by those tasks with fewer interested volunteers to most interested volunteers. When assigning a task, we first identify volunteers who were interested in the task and assign it to the volunteer with the fewest assignments. If no volunteer is interested in the task, we assign the task to the volunteer with the fewest number of assignments.
+
+Pros
+This ensures that the less popular tasks get assigned to volunteers interested in performing them
+Cons
+Volunteers who expressed interest in many tasks might be assigned many tasks, while volunteers who only checked a few boxes may go unassigned
+
+Option B: Round Robin
+We maintain a list of volunteers in chronological order with newer registrants appearing at the end. We repeatedly iterate over the list of volunteers, making one task assignment per volunteer per pass. If a task in the volunteer’s top three choices is still available, it is assigned to the volunteer and removed from the unassigned pool. If no top picks are available, we assign to the volunteer the first available task in the list of tasks that they’ve expressed interest in. If that list is empty, we arbitrarily assign the volunteer one of the remaining tasks.
+
+Pros
+This will ensure that the number of tasks assigned to each volunteer is more or less equal
+This gives a slight advantage to signing up early
+
+
+Cons
+We might arbitrarily assign a task an early volunteer finds undesirable without realizing it would be a much better fit for a later volunteer
+
+Option C: Try All Assignments
+The only way to know that we have made an optimal assignment is to try them all. As long as the scale of the problem stays relatively small, this should be feasible. If a volunteer is assigned a task in their list of top three preferred tasks, it earns two points. Any assignment that appears in their list of acceptable tasks earns one point. An arbitrary task assignment loses one point. We can try them all out and keep the assignment configuration with the highest score.
+
+Pros
+This will guarantee the best match every time
+Cons
+The computational power required to execute this algorithm can quickly grow out of hand as the number of volunteers and tasks increases
+
+Future Work
+We have received initial feedback from organizers around the timing and efficiency of tasks. The team is considering adding task dependency (e.g. some tasks rely on others being done first), and using this to help determine task assignment in the future.
+
+QUESTION:
+WHAT ARE TWO TO THREE DATA STRUCTURES THAT COULD BE USED TO STORE TASKS WITH THEIR DEPENDENCIDES?
+ANSWER: ____
+
+Conclusion
+Write conclusion here: _____
+
