@@ -1,5 +1,12 @@
 # Task List
 
+```
+FIRST THING YOU NEED TO DO IS FORK/CLONE THIS REPO
+SECOND THING IS NPM INSTALL
+THIRD THING IS run the command:
+`git checkout -b <your name here>`
+```
+
 You may do these tasks in any order, but take note that they are listed in the order your team has prioritized completing them.
 
 Run the tests/code by typing either:
